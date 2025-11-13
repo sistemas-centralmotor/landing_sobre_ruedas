@@ -352,7 +352,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="telefono-desktop">Teléfono / Celular *</label>
+                        <label for="telefono-desktop">Celular *</label>
                         <input type="tel" id="telefono" name="telefono" required placeholder="300 123 4567"
                             inputmode="numeric" pattern="\\d{7,12}" maxlength="10">
                     </div>
@@ -366,7 +366,7 @@
                             <option value="ford">Ford</option>
                             <option value="suzuki">Suzuki</option>
                             <option value="citroen">Citroën</option>
-                            <option value="usados">Usados</option>
+                            <option value="usados">Central Motor Usados</option>
                         </select>
                     </div>
 
@@ -423,7 +423,7 @@
     <script>
         document.getElementById('contact').value = Date.now();
 
-        const endpoint = "https://auto.centralmotor.com.co/webhook-test/d8c144d1-ee5b-4529-bfbb-d73ea95ce542";
+        const endpoint = "https://auto.centralmotor.com.co/webhook/d8c144d1-ee5b-4529-bfbb-d73ea95ce542";
 
         const form = document.getElementById('registro');
 
@@ -472,7 +472,7 @@
                 putError(email, 'Correo electrónico no válido.'); ok = false;
             }
             if (!/^\d{7,10}$/.test(telefono.value)) {
-                putError(telefono, 'El teléfono debe tener 7 a 10 dígitos.'); ok = false;
+                putError(telefono, 'El celular debe tener 10 dígitos.'); ok = false;
             }
             if (!marca.value) {
                 putError(marca, 'Selecciona una marca.'); ok = false;
