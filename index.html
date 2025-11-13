@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Motor Sobre Ruedas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: white;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Imágenes responsive */
+        .section-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .desktop-only {
+            display: block;
+        }
+
+        .mobile-only {
+            display: none;
+        }
+
+        /* Hero Section con Formulario (Desktop) */
+        .hero-with-form {
+            display: none;
+            /* Oculto en mobile */
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            padding: 3rem 2rem;
+        }
+
+        .hero-with-form.desktop-only {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .hero-image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        /* Formulario */
+        .form-section {
+            background: transparent;
+            padding: 0;
+        }
+
+        .form-section.mobile-only {
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 100%);
+            padding: 3rem 2rem;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
+        .form-subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            font-size: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #000;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.5rem 0.5rem;
+            border: 2px solid #334155;
+            background: rgba(255, 255, 255, 0.05);
+            color: #000;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ef4444;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #64748b;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1a2942;
+            color: white;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            margin-top: 1.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 0.2rem;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+
+        .checkbox-group a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+        }
+
+        .submit-btn:hover {
+            background: #00ffff;
+            transform: translateY(-2px);
+            color: #000;
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(34, 197, 94, 0.1);
+            border: 2px solid #22c55e;
+            color: #22c55e;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+            font-weight: 500;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Media Queries para Mobile */
+        @media (max-width: 1024px) {
+            .desktop-only {
+                display: none !important;
+            }
+
+            .mobile-only {
+                display: block;
+            }
+
+            .hero-with-form.desktop-only {
+                display: none !important;
+            }
+
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-title {
+                font-size: 1.6rem;
+            }
+
+            .form-subtitle {
+                font-size: 1rem;
+            }
+
+            input,
+            select,
+            textarea {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            .submit-btn {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1025px) {
+
+            /* En desktop, el formulario dentro de hero-with-form */
+            .form-section.mobile-only {
+                display: none;
+            }
+        }
+
+        /**
+            * Fin de estilos
+            **/
+        .hero {
+            position: relative;
+            isolation: isolate;
+            max-width: 1200px;
+            margin-inline: auto;
+        }
+
+        .hero-art,
+        .hero-art img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .lead-form {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+            padding: 20px;
+            margin: 16px;
+            z-index: 2;
+            /* sobre el arte */
+        }
+
+        @media (min-width:1024px) {
+            .lead-form {
+                position: absolute;
+                top: 50%;
+                right: clamp(16px, 4vw, 56px);
+                transform: translateY(-50%);
+                width: min(380px, 32vw);
+                margin: 0;
+                /* sin margen cuando flota */
+            }
+        }
+
+        .error {
+            color: #d00;
+            font-size: .9rem;
+            margin-top: 4px;
+        }
+
+        .invalid {
+            border-color: #d00;
+            outline: 0;
+            box-shadow: 0 0 0 2px rgba(208, 0, 0, .15);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Desktop Header -->
+        <img src="images/desktop/header.webp" alt="CentralMotor Logo" class="section-image desktop-only">
+
+        <!-- Mobile Header -->
+        <img src="/images/mobil/header.webp" alt="CentralMotor Logo" class="section-image mobile-only">
+
+        <section class="hero">
+            <picture class="hero-art">
+                <source media="(min-width:1024px)" srcset="images/desktop/form.webp">
+                <img src="images/mobil/event.webp" alt="CentralMotor Sobre Ruedas">
+            </picture>
+
+            <aside class="lead-form" role="complementary" aria-label="Formulario de registro">
+                <h2 class="form-title">ESTAS A UN PASO DE TU OBSEQUIO</h2>
+                <p class="form-subtitle">Registra tus datos para recibirlo.</p>
+                <form id="registro" novalidate>
+                    <div class="form-group">
+                        <label for="nombre-desktop">Nombre completo *</label>
+                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez" minlength="4"
+                            maxlength="80">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email-desktop">Correo electrónico *</label>
+                        <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com"
+                            maxlength="150">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono-desktop">Teléfono / Celular *</label>
+                        <input type="tel" id="telefono" name="telefono" required placeholder="300 123 4567"
+                            inputmode="numeric" pattern="\\d{7,12}" maxlength="10">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marca">Marca de interés *</label>
+                        <select id="marca" name="marca" required>
+                            <option value="">Selecciona una marca</option>
+                            <option value="hyundai">Hyundai</option>
+                            <option value="kia">Kia</option>
+                            <option value="ford">Ford</option>
+                            <option value="suzuki">Suzuki</option>
+                            <option value="citroen">Citroën</option>
+                            <option value="usados">Usados</option>
+                        </select>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terminos-desktop" name="terminos" required>
+                        <label for="terminos">
+                            Acepto la <a href="#privacidad">Política de Privacidad</a> y el tratamiento de mis datos
+                            personales
+                        </label>
+                        <input type="hidden" id="contact" name="contact">
+                        <div class="hp" aria-hidden="true">
+                            <label>Empresa</label>
+                            <input name="empresa">
+                        </div>
+                        <style>
+                            .hp {
+                                position: absolute;
+                                left: -9999px;
+                            }
+                        </style>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Enviar Registro</button>
+
+                    <div class="success-message" id="successMessageDesktop">
+                        ✓ ¡Registro exitoso! Visita cualquiera de nuestras vitrinas para recibir tu obsequio.
+                    </div>
+                </form>
+            </aside>
+        </section>
+
+        <!-- Desktop Como Recibir -->
+        <img src="/images/desktop/steps.webp" alt="Cómo Recibir el Obsequio" class="section-image desktop-only">
+
+        <!-- Mobile Como Recibir -->
+        <img src="/images/mobil/step.webp" alt="Cómo Recibir el Obsequio" class="section-image mobile-only">
+
+        <!-- Mobile Paso 1 -->
+        <img src="/images/mobil/step_1.webp" alt="Paso 1" class="section-image mobile-only">
+
+        <!-- Mobile Paso 2 -->
+        <img src="/images/mobil/step_2.jpg" alt="Paso 2" class="section-image mobile-only">
+
+        <!-- Mobile Paso 3 -->
+        <img src="/images/mobil/step_3.webp" alt="Paso 3" class="section-image mobile-only">
+
+        <!-- Desktop Footer -->
+        <img src="/images/desktop/footer.webp" alt="Marcas y Bancos" class="section-image desktop-only">
+
+        <!-- Mobile Footer -->
+        <img src="/images/mobil/footer.webp" alt="Marcas y Bancos" class="section-image mobile-only">
+    </div>
+
+    <script>
+        document.getElementById('contact').value = Date.now();
+
+        const endpoint = "https://auto.centralmotor.com.co/webhook-test/d8c144d1-ee5b-4529-bfbb-d73ea95ce542";
+
+        const form = document.getElementById('registro');
+
+        const clearErrors = () => {
+            form.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+            form.querySelectorAll('.error').forEach(el => el.remove());
+        };
+
+        const putError = (el, msg) => {
+            el.classList.add('invalid');
+            const m = document.createElement('div');
+            m.className = 'error';
+            m.textContent = msg;
+            // Inserta tras el input/select manteniendo tu maquetación
+            const wrap = el.closest('.campo') || el;
+            wrap.insertAdjacentElement('beforeend', m);
+        };
+
+        form.addEventListener('input', (e) => {
+            const el = e.target;
+            if (el.classList.contains('invalid')) {
+                el.classList.remove('invalid');
+                const err = (el.closest('.form-group') || el.parentElement).querySelector('.error');
+                if (err) err.remove();
+            }
+        });
+
+        document.getElementById('registro').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearErrors();
+            let ok = true;
+
+            const f = form.elements;
+            const nombre = f['nombre'];
+            const email = f['email'];
+            const telefono = f['telefono'];
+            const marca = f['marca'];
+            const terminos = f['terminos'];
+
+            // Validaciones
+            if (!nombre.value || nombre.value.trim().length < 3) {
+                putError(nombre, 'Ingresa tu nombre completo.'); ok = false;
+            }
+            const emailRe = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+            if (!email.value || !emailRe.test(email.value)) {
+                putError(email, 'Correo electrónico no válido.'); ok = false;
+            }
+            if (!/^\d{7,10}$/.test(telefono.value)) {
+                putError(telefono, 'El teléfono debe tener 7 a 10 dígitos.'); ok = false;
+            }
+            if (!marca.value) {
+                putError(marca, 'Selecciona una marca.'); ok = false;
+            }
+            if (!terminos.checked) {
+                putError(terminos, 'Debes aceptar la Política de Privacidad.'); ok = false;
+            }
+
+            // Si hay errores, no enviar
+            if (!ok) {
+                const first = form.querySelector('.invalid');
+                if (first) first.focus({ preventScroll: false });
+                return; // 👈 IMPORTANTE: detener aquí
+            }
+
+            // Si todo OK, enviar al endpoint
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Form-Key': '1c4fbc82bbe595a9a356bd5805e75e7c'
+                    },
+                    body: JSON.stringify(data),
+                    mode: 'cors'
+                });
+
+                if (res.ok) {
+                    document.getElementById('successMessageDesktop').classList.add('show');
+
+                    document.getElementById('successMessageDesktop').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                    form.reset();
+                    setTimeout(() => {
+                        document.getElementById('successMessageDesktop').classList.remove('show');
+                    }, 15000);
+                } else {
+                    alert('Error al enviar. Intenta nuevamente.');
+                }
+            } catch (error) {
+                alert('Error de conexión. Verifica tu internet.');
+            }
+        });
+    </script>
+</body>
+
+</html>
